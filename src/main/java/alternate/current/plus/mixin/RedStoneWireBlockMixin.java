@@ -25,20 +25,6 @@ public class RedStoneWireBlockMixin implements WireBlock {
 	private static final WireType TYPE = WireTypes.REDSTONE;
 
 	@Redirect(
-		method = "updateIndirectNeighbourShapes",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"
-		)
-	)
-	private boolean onUpdateIndirectNeighbourShapesRedirectIsThis(BlockState state, Block t) {
-		// Diagonal shape updates are only sent to neighbors of the same block.
-		// This redirect makes it so they are also sent to wire blocks that
-		// can connect to this wire block.
-		return isConnectedWire(state);
-	}
-
-	@Redirect(
 		method = "getConnectingSide(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/level/block/state/properties/RedstoneSide;",
 		at = @At(
 			value = "INVOKE",
