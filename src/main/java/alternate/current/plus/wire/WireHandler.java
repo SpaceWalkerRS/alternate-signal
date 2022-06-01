@@ -1009,7 +1009,17 @@ public class WireHandler {
 				}
 
 				if (needsPowerChange(neighbor)) {
-					addToNetwork(neighbor, FLOW_IN_TO_FLOW_OUT[connection.flow]);
+					int iBackupFlowDir = FLOW_IN_TO_FLOW_OUT[connection.flow];
+
+					if (iBackupFlowDir < 0) {
+						// If the direction of discovery is directly above or below,
+						// the resulting backup flow direction is invalid. If this
+						// is the case, adopt the backup flow direction from the
+						// wire that discovered it.
+						iBackupFlowDir = wire.iFlowDir;
+					}
+
+					addToNetwork(neighbor, iBackupFlowDir);
 				}
 			});
 		}
