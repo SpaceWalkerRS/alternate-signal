@@ -18,7 +18,6 @@
 		"block.PoweredBlockMixin",
 		"block.RedstoneTorchBlockMixin",
 		"block.RedstoneWallTorchBlockMixin",
-		"block.TargetBlockMixin",
 		"block.TrappedChestBlockMixin",
 		"block.TripWireHookBlockMixin"
 	],

@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import alternate.current.plus.AlternateCurrentPlusMod;
 import alternate.current.plus.wire.WireBlock;
@@ -23,20 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public class RedStoneWireBlockMixin implements WireBlock {
 
 	private static final WireType TYPE = WireTypes.REDSTONE;
-
-	@Redirect(
-		method = "updateIndirectNeighbourShapes",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"
-		)
-	)
-	private boolean onUpdateIndirectNeighbourShapesRedirectIsThis(BlockState state, Block t) {
-		// Diagonal shape updates are only sent to neighbors of the same block.
-		// This redirect makes it so they are also sent to wire blocks that
-		// can connect to this wire block.
-		return isConnectedWire(state);
-	}
 
 	@Redirect(
 		method = "getConnectingSide(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/level/block/state/properties/RedstoneSide;",
@@ -67,11 +54,11 @@ public class RedStoneWireBlockMixin implements WireBlock {
 			value = "HEAD"
 		)
 	)
-	private void onUpdate(Level level, BlockPos pos, BlockState state, CallbackInfo ci) {
+	private void onUpdate(Level level, BlockPos pos, BlockState state, CallbackInfoReturnable<BlockState> cir) {
 		if (AlternateCurrentPlusMod.on) {
 			// Using redirects for calls to this method makes conflicts with
 			// other mods more likely, so we inject-cancel instead.
-			ci.cancel();
+			cir.setReturnValue(state);
 		}
 	}
 
@@ -79,17 +66,17 @@ public class RedStoneWireBlockMixin implements WireBlock {
 		method = "checkCornerChangeAt",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"
+			target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"
 		)
 	)
-	private boolean onCheckCornerChangeAtRedirectIsThis(BlockState state, Block t) {
+	private Block onCheckCornerChangeAtRedirectGetBlock(BlockState state) {
 		// Vanilla redstone dust is weird. When its connection properties change
 		// it does not emit block updates to notify neighboring blocks that it
 		// has done so. Instead, when a wire is placed or removed, neighboring
 		// wires are told to emit block updates to their neighbors.
 		// We do not change this, but instead extend this condition to include
 		// all wires that can connect to this wire.
-		return isConnectedWire(state);
+		return isConnectedWire(state) ? (Block)(Object)this : state.getBlock();
 	}
 
 	@Inject(
@@ -97,7 +84,7 @@ public class RedStoneWireBlockMixin implements WireBlock {
 		at = @At(
 			value = "INVOKE",
 			shift = Shift.BEFORE,
-			target = "Lnet/minecraft/world/level/block/RedStoneWireBlock;updatePowerStrength(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V"
+			target = "Lnet/minecraft/world/level/block/RedStoneWireBlock;updatePowerStrength(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;"
 		)
 	)
 	private void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moved, CallbackInfo ci) {
@@ -111,7 +98,7 @@ public class RedStoneWireBlockMixin implements WireBlock {
 		at = @At(
 			value = "INVOKE",
 			shift = Shift.BEFORE,
-			target = "Lnet/minecraft/world/level/block/RedStoneWireBlock;updatePowerStrength(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V"
+			target = "Lnet/minecraft/world/level/block/RedStoneWireBlock;updatePowerStrength(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;"
 		)
 	)
 	private void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved, CallbackInfo ci) {

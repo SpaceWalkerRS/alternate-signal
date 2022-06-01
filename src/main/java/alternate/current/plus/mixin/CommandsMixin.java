@@ -14,7 +14,6 @@ import alternate.current.plus.command.AlternateCurrentCommand;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.Commands.CommandSelection;
 
 @Mixin(Commands.class)
 public class CommandsMixin {
@@ -29,7 +28,7 @@ public class CommandsMixin {
 			target = "Lcom/mojang/brigadier/CommandDispatcher;findAmbiguities(Lcom/mojang/brigadier/AmbiguityConsumer;)V"
 		)
 	)
-	private void registerCommands(CommandSelection selection, CallbackInfo ci) {
+	private void registerCommands(boolean isDedicatedServer, CallbackInfo ci) {
 		AlternateCurrentCommand.register(dispatcher);
 	}
 }
