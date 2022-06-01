@@ -52,7 +52,7 @@ package com.example;
 
 import alternate.current.plus.WireInitializer;
 
-public class ExampleInitializer extends WireInitializer {
+public class ExampleInitializer implements WireInitializer {
 
 	@Override
 	public void initializeWireTypes(WireTypeRegistry registry) {
