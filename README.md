@@ -6,7 +6,7 @@ Alternate Current Plus is built upon [Alternate Current](https://github.com/Spac
 
 If you wish to take advantage of Alternate Current's optimizations for your own custom wire types, you can add Alternate Current Plus as a dependency to your mod.
 
-- Download the latest release of Alternate Current Plus and place it in `/vendor/alternate-current-plus/` in your project folder.
+- Download the release of the desired Alternate Current Plus version and place it in `/vendor/alternate-current-plus/` in your project folder.
 
 - In `build.gradle` add the following to the `repositories { }` section:
 
@@ -28,7 +28,7 @@ dependencies {
 }
 ```
 
-- Define the version of Alternate Current Plus you wish to use in `gradle.properties`, for example:
+- Define the version of Alternate Current Plus you are using in `gradle.properties`, for example:
 
 ```
 alternate_current_plus_version=mc1.19-1.3.0
