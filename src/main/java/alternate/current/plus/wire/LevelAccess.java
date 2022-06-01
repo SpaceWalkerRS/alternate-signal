@@ -1,6 +1,7 @@
 package alternate.current.plus.wire;
 
 import alternate.current.plus.interfaces.mixin.IBlock;
+import alternate.current.plus.util.BlockUtil;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +16,9 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 
 public class LevelAccess {
 
+	private static final int Y_MIN = 0;
+	private static final int Y_MAX = 256;
+
 	private final ServerLevel level;
 
 	LevelAccess(ServerLevel level) {
@@ -27,16 +31,15 @@ public class LevelAccess {
 	BlockState getBlockState(BlockPos pos) {
 		int y = pos.getY();
 
-		if (y < level.getMinBuildHeight() || y >= level.getMaxBuildHeight()) {
+		if (y < Y_MIN || y >= Y_MAX) {
 			return Blocks.VOID_AIR.defaultBlockState();
 		}
 
 		int x = pos.getX();
 		int z = pos.getZ();
-		int index = level.getSectionIndex(y);
 
 		ChunkAccess chunk = level.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, true);
-		LevelChunkSection section = chunk.getSections()[index];
+		LevelChunkSection section = chunk.getSections()[y >> 4];
 
 		if (section == null) {
 			return Blocks.AIR.defaultBlockState();
@@ -57,16 +60,15 @@ public class LevelAccess {
 
 		int y = pos.getY();
 
-		if (y < level.getMinBuildHeight() || y >= level.getMaxBuildHeight()) {
+		if (y < Y_MIN || y >= Y_MAX) {
 			return false;
 		}
 
 		int x = pos.getX();
 		int z = pos.getZ();
-		int index = level.getSectionIndex(y);
 
 		ChunkAccess chunk = level.getChunk(x >> 4, z >> 4, ChunkStatus.FULL, true);
-		LevelChunkSection section = chunk.getSections()[index];
+		LevelChunkSection section = chunk.getSections()[y >> 4];
 
 		if (section == null) {
 			return false; // we should never get here
@@ -84,23 +86,23 @@ public class LevelAccess {
 		chunk.setUnsaved(true);
 
 		if (updateNeighborShapes) {
-			prevState.updateIndirectNeighbourShapes(level, pos, Block.UPDATE_CLIENTS);
-			state.updateNeighbourShapes(level, pos, Block.UPDATE_CLIENTS);
-			state.updateIndirectNeighbourShapes(level, pos, Block.UPDATE_CLIENTS);
+			prevState.updateIndirectNeighbourShapes(level, pos, BlockUtil.FLAG_UPDATE_CLIENTS);
+			state.updateNeighbourShapes(level, pos, BlockUtil.FLAG_UPDATE_CLIENTS);
+			state.updateIndirectNeighbourShapes(level, pos, BlockUtil.FLAG_UPDATE_CLIENTS);
 		}
 
 		return true;
 	}
 
 	boolean breakWire(BlockPos pos, BlockState state) {
-		BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+		BlockEntity blockEntity = state.getBlock().isEntityBlock() ? level.getBlockEntity(pos) : null;
 		Block.dropResources(state, level, pos, blockEntity);
-		return level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+		return level.setBlock(pos, Blocks.AIR.defaultBlockState(), BlockUtil.FLAG_UPDATE_CLIENTS);
 	}
 
 	void updateNeighborShape(BlockPos pos, BlockState state, Direction fromDir, BlockPos fromPos, BlockState fromState) {
 		BlockState newState = state.updateShape(fromDir, fromState, level, pos, fromPos);
-		Block.updateOrDestroy(state, newState, level, pos, Block.UPDATE_CLIENTS);
+		Block.updateOrDestroy(state, newState, level, pos, BlockUtil.FLAG_UPDATE_CLIENTS);
 	}
 
 	void updateNeighborBlock(BlockPos pos, BlockPos fromPos, Block fromBlock) {

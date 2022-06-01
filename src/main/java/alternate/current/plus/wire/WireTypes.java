@@ -8,13 +8,14 @@ import org.apache.logging.log4j.Logger;
 
 import alternate.current.plus.AlternateCurrentPlusMod;
 import alternate.current.plus.WireInitializer;
+import alternate.current.plus.util.Redstone;
 import alternate.current.plus.wire.redstone.RedstoneWireType;
 
 import net.minecraft.resources.ResourceLocation;
 
 public class WireTypes {
 
-	public static final WireType REDSTONE = new RedstoneWireType(1, WireConnectionBehavior.BOTH);
+	public static final WireType REDSTONE = new RedstoneWireType(Redstone.SIGNAL_STEP, WireConnectionBehavior.BOTH);
 
 	private static final Map<ResourceLocation, WireType> ID_TO_TYPE = new HashMap<>();
 	private static final Map<WireType, ResourceLocation> TYPE_TO_ID = new HashMap<>();

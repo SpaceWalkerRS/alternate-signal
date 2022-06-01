@@ -2,7 +2,7 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "alternate.current.plus.mixin",
-	"compatibilityLevel": "JAVA_16",
+	"compatibilityLevel": "JAVA_8",
 	"mixins": [
 		"CommandsMixin",
 		"RedStoneWireBlockMixin",
@@ -14,12 +14,10 @@
 		"block.DiodeBlockMixin",
 		"block.LecternBlockMixin",
 		"block.LeverBlockMixin",
-		"block.LightningRodBlockMixin",
 		"block.ObserverBlockMixin",
 		"block.PoweredBlockMixin",
 		"block.RedstoneTorchBlockMixin",
 		"block.RedstoneWallTorchBlockMixin",
-		"block.SculkSensorBlockMixin",
 		"block.TargetBlockMixin",
 		"block.TrappedChestBlockMixin",
 		"block.TripWireHookBlockMixin"

@@ -1,5 +1,6 @@
 package alternate.current.plus.wire.redstone;
 
+import alternate.current.plus.util.Redstone;
 import alternate.current.plus.wire.LevelAccess;
 import alternate.current.plus.wire.Node;
 import alternate.current.plus.wire.WireConnectionBehavior;
@@ -12,7 +13,6 @@ import alternate.current.plus.wire.WireType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.redstone.Redstone;
 
 public class RedstoneWireType extends WireType {
 
