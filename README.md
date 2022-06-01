@@ -1,6 +1,6 @@
 # Alternate Current Plus
 
-Alternate Current Plus is built upon [Alternate Current](https://github.com/SpaceWalkerRS/alternate-current/blob/master/README.md), using its optimized algorithm to allow for complex but fast interactions between different wire types.
+Alternate Current Plus is built upon [Alternate Current](https://github.com/SpaceWalkerRS/alternate-current/blob/main/README.md), using its optimized algorithm to allow for complex but fast interactions between different wire types.
 
 ## Information For Mod Developers
 
