@@ -25,8 +25,8 @@ public class DebugScreenOverlayMixin {
 		method = "getSystemInformation",
 		locals = LocalCapture.CAPTURE_FAILHARD,
 		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/world/level/block/state/BlockState;getTags()Ljava/util/stream/Stream;"
+			value = "FIELD",
+			target = "Lnet/minecraft/core/Registry;BLOCK_REGISTRY:Lnet/minecraft/resources/ResourceKey;"
 		)
 	)
 	private void addWireTypeInfo(CallbackInfoReturnable<List<String>> cir, long maxMemory, long totalMemory, long freeMemory, long usedMemory, List<String> info, BlockPos pos, BlockState state) {
