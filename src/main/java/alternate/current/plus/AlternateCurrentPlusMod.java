@@ -41,7 +41,7 @@ public class AlternateCurrentPlusMod implements ModInitializer, WireInitializer 
 
 	@Override
 	public void initializeWireTypes(WireTypeRegistry registry) {
-		registry.register(new ResourceLocation("redstone_wire"), WireTypes.REDSTONE); // register vanilla redstone dust
+		registry.register(new ResourceLocation("redstone"), WireTypes.REDSTONE); // register vanilla redstone dust
 	}
 
 	@Override
