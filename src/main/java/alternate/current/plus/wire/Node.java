@@ -5,6 +5,7 @@ import java.util.Arrays;
 import alternate.current.plus.wire.WireHandler.Directions;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -19,7 +20,7 @@ public class Node {
 	private static final int CONDUCTOR = 0b01;
 	private static final int SOURCE    = 0b10;
 
-	final LevelAccess level;
+	final ServerLevel level;
 	final Node[] neighbors;
 
 	BlockPos pos;
@@ -37,7 +38,7 @@ public class Node {
 	/** The wire that queued this node for an update. */
 	WireNode neighborWire;
 
-	Node(LevelAccess level) {
+	Node(ServerLevel level) {
 		this.level = level;
 		this.neighbors = new Node[Directions.ALL.length];
 	}
@@ -76,7 +77,7 @@ public class Node {
 
 		this.flags = 0;
 
-		if (this.level.isConductor(this.pos, this.state)) {
+		if (this.state.isRedstoneConductor(this.level, this.pos)) {
 			this.flags |= CONDUCTOR;
 		}
 		if (this.state.isSignalSource()) {

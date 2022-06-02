@@ -9,6 +9,7 @@
 		"ServerLevelMixin",
 		"block.BasePressurePlateBlockMixin",
 		"block.BlockMixin",
+		"block.BlockStateMixin",
 		"block.ButtonBlockMixin",
 		"block.DaylightDetectorBlockMixin",
 		"block.DiodeBlockMixin",
@@ -21,6 +22,9 @@
 		"block.TargetBlockMixin",
 		"block.TrappedChestBlockMixin",
 		"block.TripWireHookBlockMixin"
+	],
+	"client": [
+		"client.DebugScreenOverlayMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
