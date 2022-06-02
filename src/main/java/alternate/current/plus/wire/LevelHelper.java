@@ -3,7 +3,6 @@ package alternate.current.plus.wire;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
@@ -13,12 +12,11 @@ public class LevelHelper {
 
 	/**
 	 * An optimized version of {@link net.minecraft.world.level.Level#setBlock
-	 * Level.setBlock}. Since this method is only used to update redstone wire block
-	 * states, lighting checks, height map updates, and block entity updates are
-	 * omitted.
+	 * Level.setBlock}. Since this method is only used to update wire block states,
+	 * lighting checks, height map updates, and block entity updates are omitted.
 	 */
 	static boolean setWireState(ServerLevel level, BlockPos pos, BlockState state, boolean updateNeighborShapes) {
-		if (!state.is(Blocks.REDSTONE_WIRE)) {
+		if (!(state.getBlock() instanceof WireBlock)) {
 			return false;
 		}
 
