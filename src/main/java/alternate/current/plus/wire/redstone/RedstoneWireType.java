@@ -16,6 +16,17 @@ import net.minecraft.world.level.redstone.Redstone;
 
 public class RedstoneWireType extends WireType {
 
+	public RedstoneWireType(int minPower, int maxPower, int powerStep, WireConnectionBehavior defaultBehavior) {
+		super(minPower, maxPower, powerStep, defaultBehavior);
+
+		if (minPower < Redstone.SIGNAL_MIN) {
+			throw new IllegalArgumentException("minPower cannot be less than " + Redstone.SIGNAL_MIN + "!");
+		}
+		if (maxPower < Redstone.SIGNAL_MAX) {
+			throw new IllegalArgumentException("maxPower cannot be more than " + Redstone.SIGNAL_MAX + "!");
+		}
+	}
+
 	public RedstoneWireType(int powerStep, WireConnectionBehavior defaultBehavior) {
 		super(Redstone.SIGNAL_MIN, Redstone.SIGNAL_MAX, powerStep, defaultBehavior);
 	}
