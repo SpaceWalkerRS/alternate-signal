@@ -27,6 +27,9 @@ public abstract class WireType {
 	public final WireConnectionBehavior defaultBehavior;
 
 	protected WireType(int minPower, int maxPower, int powerStep, WireConnectionBehavior defaultBehavior) {
+		if (minPower > maxPower) {
+			throw new IllegalArgumentException("minPower cannot be more than maxPower!");
+		}
 		if (powerStep < 0) {
 			throw new IllegalArgumentException("powerStep must be at least 0!");
 		}

@@ -24,6 +24,9 @@
 		"block.TrappedChestBlockMixin",
 		"block.TripWireHookBlockMixin"
 	],
+	"client": [
+		"client.DebugScreenOverlayMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}
