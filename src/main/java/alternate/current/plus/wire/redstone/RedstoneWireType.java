@@ -22,7 +22,7 @@ public class RedstoneWireType extends WireType {
 		if (minPower < Redstone.SIGNAL_MIN) {
 			throw new IllegalArgumentException("minPower cannot be less than " + Redstone.SIGNAL_MIN + "!");
 		}
-		if (maxPower < Redstone.SIGNAL_MAX) {
+		if (maxPower > Redstone.SIGNAL_MAX) {
 			throw new IllegalArgumentException("maxPower cannot be more than " + Redstone.SIGNAL_MAX + "!");
 		}
 	}
