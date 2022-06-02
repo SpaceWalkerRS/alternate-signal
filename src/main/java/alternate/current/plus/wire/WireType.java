@@ -5,6 +5,7 @@ import alternate.current.plus.wire.WireHandler.NodeProvider;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -52,9 +53,9 @@ public abstract class WireType {
 		return Mth.clamp(power, minPower, maxPower);
 	}
 
-	public abstract int getPower(LevelAccess level, BlockPos pos, BlockState state);
+	public abstract int getPower(BlockGetter level, BlockPos pos, BlockState state);
 
-	public abstract BlockState setPower(LevelAccess level, BlockPos pos, BlockState state, int power);
+	public abstract BlockState setPower(BlockGetter level, BlockPos pos, BlockState state, int power);
 
 	public abstract void findConnections(NodeProvider nodes, WireNode wire, ConnectionConsumer connections);
 

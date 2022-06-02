@@ -1,6 +1,5 @@
 package alternate.current.plus.wire.redstone;
 
-import alternate.current.plus.wire.LevelAccess;
 import alternate.current.plus.wire.Node;
 import alternate.current.plus.wire.WireConnectionBehavior;
 import alternate.current.plus.wire.WireConnectionManager.ConnectionConsumer;
@@ -10,6 +9,7 @@ import alternate.current.plus.wire.WireNode;
 import alternate.current.plus.wire.WireType;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.redstone.Redstone;
@@ -21,12 +21,12 @@ public class RedstoneWireType extends WireType {
 	}
 
 	@Override
-	public int getPower(LevelAccess level, BlockPos pos, BlockState state) {
+	public int getPower(BlockGetter level, BlockPos pos, BlockState state) {
 		return state.getValue(BlockStateProperties.POWER);
 	}
 
 	@Override
-	public BlockState setPower(LevelAccess level, BlockPos pos, BlockState state, int power) {
+	public BlockState setPower(BlockGetter level, BlockPos pos, BlockState state, int power) {
 		return state.setValue(BlockStateProperties.POWER, power);
 	}
 
