@@ -1,6 +1,10 @@
 package alternate.current.plus.wire;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -37,11 +41,11 @@ public class WireNode extends Node {
 	boolean prepared;
 	boolean inNetwork;
 
-	WireNode(WireBlock wireBlock, LevelAccess level, BlockPos pos, BlockState state) {
+	WireNode(WireBlock wireBlock, ServerLevel level, BlockPos pos, BlockState state) {
 		this(wireBlock.getWireType(), level, pos, state);
 	}
 
-	WireNode(WireType type, LevelAccess level, BlockPos pos, BlockState state) {
+	WireNode(WireType type, ServerLevel level, BlockPos pos, BlockState state) {
 		super(level);
 
 		this.pos = pos.immutable();
@@ -110,12 +114,16 @@ public class WireNode extends Node {
 		state = level.getBlockState(pos);
 
 		if (shouldBreak) {
-			return level.breakWire(pos, state);
+			BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+			Block.dropResources(state, level, pos, blockEntity);
+			level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+
+			return true;
 		}
 
 		currentPower = type.clamp(virtualPower);
 		state = type.setPower(level, pos, state, currentPower);
 
-		return level.setWireState(pos, state, added);
+		return LevelHelper.setWireState(level, pos, state, added);
 	}
 }
