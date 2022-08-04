@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "alternate.signal.mixin",
+	"compatibilityLevel": "JAVA_16",
+	"mixins": [
+		"CommandsMixin",
+		"RedStoneWireBlockMixin",
+		"ServerLevelMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

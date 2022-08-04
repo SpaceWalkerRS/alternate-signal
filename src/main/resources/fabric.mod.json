@@ -1,37 +1,35 @@
 {
 	"schemaVersion": 1,
-	"id": "alternate-current-plus",
+	"id": "alternate-signal",
 	"version": "${version}",
 
-	"name": "Alternate Current Plus",
-	"description": "An optimized redstone wire algorithm with hooks for adding custom wire types.",
+	"name": "Alternate Signal",
+	"description": "A version of Alternate Current compatible with the Signal API.",
 	"authors": [
 		"Space Walker"
 	],
 	"contact": {
-		"homepage": "https://modrinth.com/mod/alternate-current-plus",
-		"sources": "https://github.com/SpaceWalkerRS/alternate-current-plus",
-		"issues": "https://github.com/SpaceWalkerRS/alternate-current-plus/issues"
+		"homepage": "https://modrinth.com/mod/alternate-signal",
+		"sources": "https://github.com/SpaceWalkerRS/alternate-signal",
+		"issues": "https://github.com/SpaceWalkerRS/alternate-signal/issues"
 	},
 
 	"license": "MIT Licence",
-	"icon": "assets/alternate/current/plus/icon.png",
+	"icon": "assets/alternate/signal/icon.png",
 
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"alternate.current.plus.AlternateCurrentPlusMod"
-		],
-		"alternate-current-plus": [
-			"alternate.current.plus.AlternateCurrentPlusMod"
+			"alternate.signal.AlternateSignalMod"
 		]
 	},
 	"mixins": [
-		"alternate-current-plus.mixins.json"
+		"alternate-signal.mixins.json"
 	],
 
 	"depends": {
-		"minecraft": "1.19.x"
+		"minecraft": "1.19.x",
+		"signal": "*"
 	},
 	"breaks": {
 		"alternate-current": "*"

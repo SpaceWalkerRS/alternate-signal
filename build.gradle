@@ -11,12 +11,17 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+	flatDir {
+		dirs "./vendor/signal/"
+	}
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	modImplementation ":signal:${project.signal_version}"
 }
 
 processResources {
